@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "vite:build": "remix vite:build"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@remix-run/react": "^2.16.7",
