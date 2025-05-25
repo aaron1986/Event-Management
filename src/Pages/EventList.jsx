@@ -66,14 +66,6 @@ export default function EventList({ isAuthenticated }) {
         value={searchTerm}
         onChange={handleSearch}
         className="search-input"
-        style={{
-          padding: "10px",
-          marginBottom: "20px",
-          width: "100%",
-          maxWidth: "500px",
-          borderRadius: "8px",
-          border: "1px solid #ccc"
-        }}
       />
 
       {/* 🗂 Filtered Results */}

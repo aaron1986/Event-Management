@@ -226,6 +226,17 @@ button:active {
   src: url(./assets/btn-font.TTF);
 }
 
+
+  /* input search */
+  input.search-inout {
+  padding: "10px";
+  margin-bottom: "20px";
+  width: "100%";
+  max-width: "500px";
+  border-radius: "8px";
+  border: "1px solid #ccc";
+}
+
 /*FORM LOGIN */
 label,
 input,
@@ -276,6 +287,7 @@ textarea {
     border-radius: 3px;
     line-height: 29px;
     line-height: 2rem;
+    margin-bottom: 5%;
 }
 
 .error-message {
@@ -318,3 +330,78 @@ textarea {
   margin-top: 5%;
 }
 
+/* MEDIA QUERIES */
+@media screen and (max-width: 500px) {
+  nav {
+    flex-direction: column; 
+    align-items: center;
+    width: 100%;
+  }
+
+  nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+
+  nav li, nav a {
+    display: block;
+    font-size: 24px; 
+    width: 100%;
+    text-align: center;
+  }
+
+  li, a {
+    display: flex;
+    padding: 10px 10px;
+    font-family: navFont;
+    font-size: 35px;
+    color: #000000;
+    text-decoration: none;
+    justify-content: center;
+  }
+
+  h1 {
+    font-size: 1.6em;
+  }
+
+  input.search-input {
+    width: 65%;
+  }
+
+  .event-card {
+    width: 60%; 
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  .card .card-content {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .small-details {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .event-list {
+    width: 90%;
+  }
+
+  .event-details-wrapper {
+    padding: 20px;
+  }
+
+  .event-details-wrapper img {
+    height: 30vh;
+  }
+}
