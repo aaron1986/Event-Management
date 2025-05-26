@@ -15,7 +15,6 @@ export default function Nav({ user }) {
     <nav>
       <ul>
         <li><Link to="/">Home</Link></li>
-        {/* <li><Link to="/find-events">Find Events</Link></li> */}
         {user ? (
           <li>
             <a href="/logout" onClick={handleLogout}>Log Out</a>
