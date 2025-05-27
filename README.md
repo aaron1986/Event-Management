@@ -21,7 +21,7 @@ npm install firebase<br/>
 npm install -g firebase-tools<br/>
 npm firebase deploy<br/>
 npm install firebase react-router-dom<br/>
-<br/><br/>
+
 <h2>Project Structure.</h2>
 src/<br/>
 ├── Components/<br/>
@@ -43,10 +43,13 @@ src/<br/>
 │ └── userRole.js<br/>
 ├── App.jsx<br/>
 └── main.jsx<br/>
-<br/><br/>
+
+<h2>Google Calendar API</h2>
 On the Google Calendar website >> Create project > Enable Google Calendar API >> OAuth consent screen > Add scope >> https://www.googleapis.com/auth/calendar.events >> Create OAuth Client ID → Web App >> http://localhost:5173
 <br/><br/>
 I added the script tag to the following path public/index.html <script async defer src="https://apis.google.com/js/api.js"></script><br/>
 Added the Google Calendar API information to services/calendar.js
+
+<h2>WrireFrames</h2>
 
 ![Wireframe Image](./src/assets/wireframes.png)
