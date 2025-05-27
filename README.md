@@ -4,12 +4,11 @@ npm create vite@latest events-platform -- --template react
 <h2>PLAYWRIGHT.</h2>
 installed playwright testing:<br/>
 npm init playwright<br/>
-<br/><br/>
+<br/>
 changed the package.json file:<br/>
 "scripts": {<br/>
     "test": "playwright test --headed"<br/>
 }<br/>
-<br/><br/>
 Completed test(s) for the following:<br/>
 (1) Title of website.<br/>
 (2) Navigation Links.<br/>
