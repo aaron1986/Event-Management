@@ -1,9 +1,7 @@
-SET-UP.
-</br></br>
+<h1>SET-UP.</h1>
 npm create vite@latest events-platform -- --template react
 </br></br>
-PLAYWRIGHT.
-<br/><br/>
+<h2>PLAYWRIGHT.</h2>
 installed playwright testing:<br/>
 npm init playwright<br/>
 <br/><br/>
@@ -19,28 +17,31 @@ Completed test(s) for the following:<br/>
 (4) Create Event.<br/>
 (5) Edit Event.<br/>
 
-FIREBASE.
-<br/><br/>
+<h2>FIREBASE.</h2>
 npm install firebase<br/>
 npm install -g firebase-tools<br/>
 npm firebase deploy<br/>
 npm install firebase react-router-dom<br/>
 <br/><br/>
-I created the Project Structure as followed:
-<br/><br/>
+<h2>Project Structure.</h2>
 src/<br/>
 ├── Components/<br/>
-│ ├── EventCard.jsx<br/>
-│ ├── EventForm.jsx<br/>
-│ └── ProtectedRoute.jsx<br/>
-├── pages/<br/>
-│ ├── Home.jsx<br/>
+│ ├── CreateEvent.jsx<br/>
+│ ├── EditEvent.jsx<br/>
+│ └── EventCard.jsx<br/>
+│ └── Nav.jsx<br/>
+│ └── SearchEvents.jsx<br/>
+├── Pages/<br/>
+│ ├── EventList.jsx<br/>
 │ ├── Login.jsx<br/>
-│ ├── Dashboard.jsx<br/>
-│ └── CreateEvent.jsx<br/>
-├── services/<br/>
-│ ├── firebase.js<br/>
-│ └── calendar.js<br/>
+│ ├── FilterEvents.jsx<br/>
+│ └── Login.jsx<br/>
+├── Utils/<br/>
+│ ├── DataRender.js<br/>
+│ └── EventDatabase.jsx<br/>
+│ └── firebase.js<br/>
+│ └── googlecalendar.js<br/>
+│ └── userRole.js<br/>
 ├── App.jsx<br/>
 └── main.jsx<br/>
 <br/><br/>
