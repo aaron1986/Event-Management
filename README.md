@@ -21,6 +21,7 @@ npm install firebase<br/>
 npm install -g firebase-tools<br/>
 npm firebase deploy<br/>
 npm install firebase react-router-dom<br/>
+Created a user called admin@events.com to login and create/edit.
 
 <h2>Project Structure.</h2>
 src/<br/>
