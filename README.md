@@ -48,5 +48,5 @@ On the Google Calendar website >> Create project > Enable Google Calendar API >>
 <br/><br/>
 I added the script tag to the following path public/index.html <script async defer src="https://apis.google.com/js/api.js"></script><br/>
 Added the Google Calendar API information to services/calendar.js
-<br/><br/><br/>
+
 ![Wireframe Image](./src/assets/wireframes.png)
