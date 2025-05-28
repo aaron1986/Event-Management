@@ -92,7 +92,7 @@ test.describe('Home Page', () => {
     await page.getByRole('button', { name: /login/i }).click();
 
     await expect(page.locator('.error-message')).toContainText([
-      'Invalid email address.',
+      'Email is required.',
       'Password is required.',
       'Please confirm your password.'
     ]);
