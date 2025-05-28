@@ -1,4 +1,5 @@
-<h1>SET-UP.</h1>
+<h2>SET-UP.</h2>
+created a new directory in the terminal entitled 'Event-Management' and then proceeded to cd into same directory.
 npm create vite@latest events-platform -- --template react
 </br></br>
 <h2>PLAYWRIGHT.</h2>
@@ -15,6 +16,7 @@ Completed test(s) for the following:<br/>
 (3) Log In Authentication.<br/>
 (4) Create Event.<br/>
 (5) Edit Event.<br/>
+(6) Form Validation.</br>
 
 <h2>FIREBASE.</h2>
 npm install firebase<br/>
@@ -50,6 +52,7 @@ On the Google Calendar website >> Create project > Enable Google Calendar API >>
 <br/><br/>
 I added the script tag to the following path public/index.html <script async defer src="https://apis.google.com/js/api.js"></script><br/>
 Added the Google Calendar API information to services/calendar.js
+
 
 <h2>WrireFrames</h2>
 
