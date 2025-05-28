@@ -305,6 +305,20 @@ textarea {
   color: red;
 }
 
+.success-input {
+  border: 2px solid green;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.error-input {
+  border: 2px solid red;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
 .card-body {
   display: flex;
   flex-direction: column;

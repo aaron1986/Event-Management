@@ -9,7 +9,8 @@ export default function Login() {
     password: '',
     confirmPassword: '',
   });
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({});
+  const [generalError, setGeneralError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -17,12 +18,44 @@ export default function Login() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const validate = () => {
+    const validationErrors = {};
+
+    if (!formData.email.trim()) {
+      validationErrors.email = 'Email is required.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      validationErrors.email = 'Invalid email address.';
+    }
+
+    if (!formData.password) {
+      validationErrors.password = 'Password is required.';
+    } else if (formData.password.length < 6) {
+      validationErrors.password = 'Password must be at least 6 characters.';
+    }
+
+    if (!formData.confirmPassword) {
+      validationErrors.confirmPassword = 'Please confirm your password.';
+    } else if (formData.password !== formData.confirmPassword) {
+      validationErrors.confirmPassword = 'Passwords do not match.';
+    }
+
+    return validationErrors;
+  };
+
+  const getInputClass = (field) => {
+    if (errors[field]) return 'error-input';
+    if (formData[field]) return 'success-input';
+    return '';
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setErrors({});
+    setGeneralError('');
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match.');
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
@@ -30,8 +63,7 @@ export default function Login() {
       await signInWithEmailAndPassword(auth, formData.email, formData.password);
       navigate('/');
     } catch (err) {
-      setError('Invalid email or password.');
-      console.error(err.message);
+      setGeneralError('Invalid email or password.');
     }
   };
 
@@ -39,18 +71,19 @@ export default function Login() {
     <div>
       <div className="title"><h1>Login to Your Account</h1></div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
+        <label htmlFor="email"><span>Email: <span className="required-star">*</span></span></label>
+        <input 
           type="text"
           id="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
           placeholder="Enter your email"
-          required
+          className={getInputClass('email')}
         />
+        {errors.email && <p className="error-message">{errors.email}</p>}
 
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password"><span>Password: <span className="required-star">*</span></span></label>
         <input
           type="password"
           id="password"
@@ -58,10 +91,11 @@ export default function Login() {
           value={formData.password}
           onChange={handleChange}
           placeholder="Enter your password"
-          required
+          className={getInputClass('password')}
         />
+        {errors.password && <p className="error-message">{errors.password}</p>}
 
-        <label htmlFor="confirmPassword">Retype Password:</label>
+        <label htmlFor="confirmPassword"><span>Retype Password: <span className="required-star">*</span></span></label>
         <input
           type="password"
           id="confirmPassword"
@@ -69,12 +103,13 @@ export default function Login() {
           value={formData.confirmPassword}
           onChange={handleChange}
           placeholder="Retype your password"
-          required
+          className={getInputClass('confirmPassword')}
         />
+        {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
 
-        {error && <p className="error-message">{error}</p>}
+        {generalError && <p className="error-message">{generalError}</p>}
 
-        <button type="submit" className='login-btn'>Login</button>
+        <button type="submit" className="login-btn">Login</button>
       </form>
     </div>
   );
