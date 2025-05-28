@@ -53,6 +53,9 @@ On the Google Calendar website >> Create project > Enable Google Calendar API >>
 I added the script tag to the following path public/index.html <script async defer src="https://apis.google.com/js/api.js"></script><br/>
 Added the Google Calendar API information to services/calendar.js
 
+<h2>LIGHTHOUSE</h2>
+
+
 
 <h2>WrireFrames</h2>
 

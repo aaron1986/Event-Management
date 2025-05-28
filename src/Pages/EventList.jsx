@@ -59,7 +59,7 @@ export default function EventList({ isAuthenticated }) {
     <div className="event-list-wrapper">
       <h1>Event Lists</h1>
 
-      {/* 🔍 Search Input */}
+      {/* Search Input */}
       <input
         type="text"
         placeholder="Search events by date, title, location or description..."
@@ -68,7 +68,7 @@ export default function EventList({ isAuthenticated }) {
         className="search-input"
       />
 
-      {/* 🗂 Filtered Results */}
+      {/* Filtered Results */}
       <div className="event-list">
         {filteredEvents.length > 0 ? (
           filteredEvents.map((event) => (
