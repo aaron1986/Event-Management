@@ -215,11 +215,13 @@ button:hover {
 button:active {
   box-shadow: 4px 4px 12px #c5c5c5, -4px -4px 12px #ffffff;
 }
-
-.calendar-button, .edit-button  {
-  font-family: btnFont;
-  font-size: 18px;
+.calendar-button,
+.edit-button {
+  min-width: 48px;
+  min-height: 48px;
+  margin: 8px 4px; 
 }
+
 
   @font-face {
   font-family: btnFont;
@@ -344,6 +346,14 @@ textarea {
   margin-top: 5%;
 }
 
+.button-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px; 
+  margin-top: 12px;
+}
+
 /* MEDIA QUERIES */
 @media screen and (max-width: 500px) {
   nav {
@@ -417,5 +427,13 @@ textarea {
 
   .event-details-wrapper img {
     height: 30vh;
+  }
+
+  .calendar-button,
+  .edit-button {
+    font-size: 20px;
+    padding: 14px 18px;
+    min-height: 48px;
+    min-width: 48px;
   }
 }

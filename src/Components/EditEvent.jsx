@@ -10,30 +10,30 @@ export default function EditEvent() {
   const [docId, setDocId] = useState(null); 
   const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  const fetchEvent = async () => {
-    const q = query(collection(db, "events"), where("id", "==", Number(id)));
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-      const docSnap = querySnapshot.docs[0];
-      setDocId(docSnap.id);
-      const data = docSnap.data();
+  useEffect(() => {
+    const fetchEvent = async () => {
+      const q = query(collection(db, "events"), where("id", "==", Number(id)));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        const docSnap = querySnapshot.docs[0];
+        setDocId(docSnap.id);
+        const data = docSnap.data();
 
-      let formattedDate = "";
-      if (data.date) {
-        const dateObj = new Date(data.date);
-        if (!isNaN(dateObj)) {
-          formattedDate = dateObj.toISOString().split("T")[0];
+        let formattedDate = "";
+        if (data.date) {
+          const dateObj = new Date(data.date);
+          if (!isNaN(dateObj)) {
+            formattedDate = dateObj.toISOString().split("T")[0];
+          }
         }
+
+        setFormData({ ...data, date: formattedDate });
       }
+      setLoading(false);
+    };
 
-      setFormData({ ...data, date: formattedDate });
-    }
-    setLoading(false);
-  };
-
-  fetchEvent();
-}, [id]);
+    fetchEvent();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,7 +57,7 @@ useEffect(() => {
   if (!formData) return <p>Event not found.</p>;
 
   return (
-    <div>
+    <div className="edit-event-container">
       <h2>Edit Event</h2>
 
       <label>
@@ -85,7 +85,15 @@ useEffect(() => {
         <input type="date" name="date" value={formData.date} onChange={handleChange} />
       </label>
 
-      <button onClick={handleSave}>Save</button>
+      <div className="button-group">
+        <button 
+          onClick={handleSave} 
+          className="save-button" 
+          aria-label="Save updated event"
+        >
+          Save
+        </button>
+      </div>
     </div>
   );
 }
