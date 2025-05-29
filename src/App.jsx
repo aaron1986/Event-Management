@@ -8,6 +8,7 @@ import Nav from "./Components/Nav";
 import Login from "./Pages/Login";
 import EditEvent from "./Components/EditEvent";
 import CreateEvent from "./Components/CreateEvent";
+import SignupForm from './Pages/SignupForm';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,6 +31,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/create-event" element={<CreateEvent />} />
         <Route path="/edit-event/:id" element={<EditEvent />} />
+        <Route path="/signup" element={<SignupForm />} />
       </Routes>
     </BrowserRouter>
   );

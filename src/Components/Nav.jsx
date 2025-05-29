@@ -15,18 +15,20 @@ export default function Nav({ user }) {
     <nav>
       <ul>
         <li><Link to="/">Home</Link></li>
+
         {user ? (
-          <li>
-            <a href="/logout" onClick={handleLogout}>Log Out</a>
-          </li>
+          <>
+            <li><Link to="/create-event">Create Event</Link></li>
+            <li>
+              <a href="/logout" onClick={handleLogout}>Log Out</a>
+            </li>
+          </>
         ) : (
-          <li><Link to="/login">Log In</Link></li>
+          <>
+            <li><Link to="/login">Log In</Link></li>
+            <li><Link to="/signup">Sign Up</Link></li>
+          </>
         )}
-
-        {user && (
-    <li><Link to="/create-event">Create Event</Link></li>
-
-)}
       </ul>
     </nav>
   );
