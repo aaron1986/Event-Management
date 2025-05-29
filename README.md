@@ -55,6 +55,7 @@ Added the Google Calendar API information to services/calendar.js
 
 <h2>LIGHTHOUSE</h2>
 npm install -D vite-imagetools</br>
+added the line(s) <link rel="preconnect"></br>
 
 <h2>WrireFrames</h2>
 
