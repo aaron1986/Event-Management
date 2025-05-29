@@ -54,8 +54,7 @@ I added the script tag to the following path public/index.html <script async def
 Added the Google Calendar API information to services/calendar.js
 
 <h2>LIGHTHOUSE</h2>
-
-
+npm install -D vite-imagetools</br>
 
 <h2>WrireFrames</h2>
 
