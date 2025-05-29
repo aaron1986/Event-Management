@@ -18,7 +18,9 @@ export default function Nav({ user }) {
 
         {user ? (
           <>
-            <li><Link to="/create-event">Create Event</Link></li>
+            {user.role === 'staff' && (
+              <li><Link to="/create-event">Create Event</Link></li>
+            )}
             <li>
               <a href="/logout" onClick={handleLogout}>Log Out</a>
             </li>
@@ -33,4 +35,3 @@ export default function Nav({ user }) {
     </nav>
   );
 }
-

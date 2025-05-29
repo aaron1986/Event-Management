@@ -42,7 +42,7 @@ export default function SignupForm() {
 
     try {
       await registerUser(formData.email, formData.password);
-      navigate('/'); // or navigate to /dashboard or /login
+      navigate('/'); 
     } catch (error) {
       setGeneralError(error.message);
     }
