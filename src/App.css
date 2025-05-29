@@ -216,10 +216,12 @@ button:active {
   box-shadow: 4px 4px 12px #c5c5c5, -4px -4px 12px #ffffff;
 }
 .calendar-button,
-.edit-button {
+.edit-button,
+.signup-button {
   min-width: 48px;
   min-height: 48px;
   margin: 8px 4px; 
+  font-family: 'navFont';
 }
 
 
@@ -430,10 +432,12 @@ textarea {
   }
 
   .calendar-button,
-  .edit-button {
+  .edit-button, 
+  .signup-button {
     font-size: 20px;
     padding: 14px 18px;
     min-height: 48px;
     min-width: 48px;
   }
 }
+

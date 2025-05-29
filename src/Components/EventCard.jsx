@@ -1,9 +1,29 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { generateGoogleCalendarLink } from "../Utils/googleCalendar";
+import { auth, db } from "../Utils/firebase";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
-export default function EventCard({ id, heading, description, location, date, img, isAuthenticated }) {
+export default function EventCard({
+  id,
+  heading,
+  description,
+  location,
+  date,
+  img,
+  isAuthenticated,
+}) {
+  const [signupCount, setSignupCount] = useState(0);
+  const [hasSignedUp, setHasSignedUp] = useState(false);
+
+  const user = auth.currentUser;
   const dateStr = typeof date === "string" ? date : date?.full;
-
   const parsedDate = new Date(dateStr);
   if (!dateStr || isNaN(parsedDate)) {
     console.warn(`Invalid date for event ID ${id}:`, date);
@@ -20,6 +40,43 @@ export default function EventCard({ id, heading, description, location, date, im
 
   const formattedDate = formatReadableDate(dateStr);
 
+  useEffect(() => {
+    const fetchSignupInfo = async () => {
+      const q = query(collection(db, "signups"), where("eventId", "==", id));
+      const snap = await getDocs(q);
+      setSignupCount(snap.size);
+
+      if (user) {
+        const userQ = query(
+          collection(db, "signups"),
+          where("eventId", "==", id),
+          where("userId", "==", user.uid)
+        );
+        const userSnap = await getDocs(userQ);
+        setHasSignedUp(!userSnap.empty);
+      }
+    };
+
+    fetchSignupInfo();
+  }, [id, user]);
+
+  const handleSignup = async () => {
+    if (!user) return alert("Please log in to sign up for this event.");
+    if (hasSignedUp) return alert("You’ve already signed up for this event.");
+
+    try {
+      await addDoc(collection(db, "signups"), {
+        eventId: id,
+        userId: user.uid,
+        timestamp: new Date().toISOString(),
+      });
+      setHasSignedUp(true);
+      setSignupCount((prev) => prev + 1);
+    } catch (err) {
+      console.error("Error signing up:", err);
+    }
+  };
+
   return (
     <div className="event-card">
       <img src={img} alt={heading} />
@@ -28,15 +85,25 @@ export default function EventCard({ id, heading, description, location, date, im
       <p><strong>Date:</strong> {formattedDate}</p>
 
       <a href={calendarLink} target="_blank" rel="noopener noreferrer">
-        <button className="calendar-button">
-          Add to Google Calendar
-        </button>
+        <button className="calendar-button">Add to Google Calendar</button>
       </a>
 
+      <p><strong>{signupCount}</strong> people signed up</p>
+
       {isAuthenticated && (
-        <Link to={`/edit-event/${id}`}>
-          <button className="edit-button">Edit</button>
-        </Link>
+        <>
+          <button
+            className="calendar-button"
+            onClick={handleSignup}
+            disabled={hasSignedUp}
+          >
+            {hasSignedUp ? "Already Signed Up" :  "Sign Up"}
+          </button>
+
+          <Link to={`/edit-event/${id}`}>
+            <button className="edit-button">Edit</button>
+          </Link>
+        </>
       )}
     </div>
   );
@@ -58,6 +125,6 @@ function formatReadableDate(dateStr) {
     month: "long",
     day: "numeric",
     hour: "2-digit",
-    minute: "2-digit"
+    minute: "2-digit",
   });
 }
