@@ -17,6 +17,7 @@ Completed test(s) for the following:<br/>
 (4) Create Event.<br/>
 (5) Edit Event.<br/>
 (6) Form Validation.</br>
+(7) Sign Up Button.</br>
 
 <h2>FIREBASE.</h2>
 npm install firebase<br/>
@@ -35,11 +36,12 @@ src/<br/>
 │ └── SearchEvents.jsx<br/>
 ├── Pages/<br/>
 │ ├── EventList.jsx<br/>
+| ├── FilterEvents.jsx<br/>
 │ ├── Login.jsx<br/>
-│ ├── FilterEvents.jsx<br/>
-│ └── Login.jsx<br/>
+│ └── SignupForm.jsx<br/>
 ├── Utils/<br/>
-│ ├── DataRender.js<br/>
+│ ├── authService.js<br/>
+| └── DataRender.jsx<br/>
 │ └── EventDatabase.jsx<br/>
 │ └── firebase.js<br/>
 │ └── googlecalendar.js<br/>
