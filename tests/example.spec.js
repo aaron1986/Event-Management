@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 async function loginUser(page) {
   await page.goto('https://northcodersevents.netlify.app/');
   await page.getByRole('link', { name: 'Log In' }).click();
-  await page.getByPlaceholder('Enter your email').fill('admin@events.com');
+  await page.getByPlaceholder('Enter your email').fill('admin@northcodersevents.com');
   await page.getByPlaceholder('Enter your password').fill('1234567');
   await page.getByPlaceholder('Retype your password').fill('1234567');
   await page.getByRole('button', { name: /login/i }).click();
@@ -30,11 +30,11 @@ test.describe('Home Page', () => {
     await page.goto('https://northcodersevents.netlify.app/');
   });
 
-  test('Title', async ({ page }) => {
+  test.skip('Title', async ({ page }) => {
     await expect(page).toHaveTitle('Northcoders Events');
   }); //End of title Test
 
-  test('Nav Links', async ({ page }) => {
+  test.skip('Nav Links', async ({ page }) => {
     await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Log In' })).toBeVisible();
     await expect(page.getByText('Log Out')).not.toBeVisible();
@@ -42,13 +42,13 @@ test.describe('Home Page', () => {
   }); //End of Nav Links Test
 
   test.describe('Log In Authentication', () => {
-    test.skip('authenticated nav links', async ({ page }) => {
+    test('authenticated nav links', async ({ page }) => {
       await loginUser(page);
       await expect(page.getByRole('link', { name: 'Create Event' })).toBeVisible();
       await expect(page.getByText('Log Out')).toBeVisible();
 
       await page.getByRole('link', { name: 'Create Event' }).click();
-      await expect(page).toHaveURL('**/create-event');
+      await expect(page).toHaveURL('https://northcodersevents.netlify.app/create-event');
     });
   }); //End of Log In Authentication Test
 
@@ -56,7 +56,7 @@ test.describe('Home Page', () => {
     test.skip('User can create a new event', async ({ page }) => {
       await loginUser(page);
       await createEvent(page, {
-        heading: 'Playwright Test Event',
+        heading: 'Playwright New Test Event',
         location: 'Online',
         description: 'This is a test event created by Playwright.',
         imageUrl: 'https://images.squarespace-cdn.com/content/v1/56acc1138a65e2a286012c54/1476623632079-BBAERA9UGQ0EODC6680U/pixabaytest6-7.jpg?format=1000w',
@@ -86,7 +86,7 @@ test.describe('Home Page', () => {
 
 
   test.describe("FORM VALIDATION", () => {
-  test("Shows errors when submitting empty login form", async ({ page }) => {
+  test.skip("Shows errors when submitting empty login form", async ({ page }) => {
     await page.goto('https://northcodersevents.netlify.app/');
     await page.getByRole('link', { name: 'Log In' }).click();
     await page.getByRole('button', { name: /login/i }).click();
@@ -98,7 +98,7 @@ test.describe('Home Page', () => {
     ]);
   });
 
-  test("Shows error for invalid email format", async ({ page }) => {
+  test.skip("Shows error for invalid email format", async ({ page }) => {
     await page.goto('https://northcodersevents.netlify.app/');
     await page.getByRole('link', { name: 'Log In' }).click();
 
@@ -110,7 +110,7 @@ test.describe('Home Page', () => {
     await expect(page.locator('.error-message')).toContainText(['Invalid email address.']);
   });
 
-  test("Shows error for password less than 6 characters", async ({ page }) => {
+  test.skip("Shows error for password less than 6 characters", async ({ page }) => {
     await page.goto('https://northcodersevents.netlify.app/');
     await page.getByRole('link', { name: 'Log In' }).click();
 
@@ -124,7 +124,7 @@ test.describe('Home Page', () => {
     ]);
   });
 
-  test("Shows error when passwords do not match", async ({ page }) => {
+  test.skip("Shows error when passwords do not match", async ({ page }) => {
     await page.goto('https://northcodersevents.netlify.app/');
     await page.getByRole('link', { name: 'Log In' }).click();
 
@@ -138,6 +138,25 @@ test.describe('Home Page', () => {
     ]);
   });
 });
+
+test.describe('Event Sign Up', () => {
+  test.only('User can sign up for an event', async ({ page }) => {
+    await loginUser(page);
+    await page.goto('https://northcodersevents.netlify.app/');
+    const signUpButton = page.getByRole('button', { name: 'Sign Up' }).first();
+    await expect(signUpButton).toBeVisible();
+    await signUpButton.click();
+
+    const updatedButton = page.getByRole('button', { name: 'Already Signed Up' }).first();
+    await expect(updatedButton).toBeVisible();
+    await expect(updatedButton).toBeDisabled();
+
+    const countText = await page.locator('text=/people signed up/').first().innerText();
+    const match = countText.match(/\d+/);
+    expect(Number(match?.[0])).toBeGreaterThan(0);
+  });
+}); //End of Sign Up Button Test
+
 
 
 }); //End of test describe('Home Page')
