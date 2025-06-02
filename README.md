@@ -61,4 +61,4 @@ added the line(s) link rel="preconnect"</br>
 
 <h2>WrireFrames</h2>
 
-![Wireframe Image](./src/assets/wireframes.png)
+![Wireframe Image](./src/assets/wireframes_events.png)
