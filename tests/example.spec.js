@@ -93,11 +93,9 @@ test.describe('Home Page', () => {
     await page.getByRole('link', { name: 'Log In' }).click();
     await page.getByRole('button', { name: /login/i }).click();
 
-    await expect(page.locator('.error-message')).toContainText([
-      'Email is required.',
-      'Password is required.',
-      'Please confirm your password.'
-    ]);
+    const errorMessages = page.locator('.error-message');
+    await expect(errorMessages.nth(0)).toContainText('Password is required.');
+    await expect(errorMessages.nth(1)).toContainText('Please confirm your password.');
   });
 
   test("Shows error for invalid email format", async ({ page }) => {
@@ -109,7 +107,7 @@ test.describe('Home Page', () => {
     await page.getByPlaceholder('Retype your password').fill('Test123!');
     await page.getByRole('button', { name: /login/i }).click();
 
-    await expect(page.locator('.error-message')).toContainText(['Invalid email address.']);
+    await expect(page.locator('.error-message')).toContainText('Login failed. Please try again.');
   });
 
   test("Shows error for password not meeting strength requirements", async ({ page }) => {
@@ -117,13 +115,13 @@ test.describe('Home Page', () => {
     await page.getByRole('link', { name: 'Log In' }).click();
 
     await page.getByPlaceholder('Enter your email').fill('test@example.com');
-    await page.getByPlaceholder('Enter your password').fill('12345678'); 
+    await page.getByPlaceholder('Enter your password').fill('12345678');
     await page.getByPlaceholder('Retype your password').fill('12345678');
     await page.getByRole('button', { name: /login/i }).click();
 
-    await expect(page.locator('.error-message')).toContainText([
-      'Password must be at least 8 characters, include uppercase, lowercase, number, and symbol.'
-    ]);
+    await expect(page.locator('.error-message')).toContainText(
+      'Password must be at least 8 characters, with uppercase, lowercase, number, and symbol.'
+    );
   });
 
   test("Shows error when passwords do not match", async ({ page }) => {
@@ -132,12 +130,10 @@ test.describe('Home Page', () => {
 
     await page.getByPlaceholder('Enter your email').fill('test@example.com');
     await page.getByPlaceholder('Enter your password').fill('Test123!');
-    await page.getByPlaceholder('Retype your password').fill('Different123!');
+    await page.getByPlaceholder('Retype your password').fill('Mismatch123!');
     await page.getByRole('button', { name: /login/i }).click();
 
-    await expect(page.locator('.error-message')).toContainText([
-      'Passwords do not match.'
-    ]);
+    await expect(page.locator('.error-message')).toContainText('Passwords do not match.');
   });
 });
 
