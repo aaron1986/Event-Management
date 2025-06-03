@@ -4,9 +4,9 @@ import { test, expect } from '@playwright/test';
 async function loginUser(page) {
   await page.goto('https://northcodersevents.netlify.app/');
   await page.getByRole('link', { name: 'Log In' }).click();
-  await page.getByPlaceholder('Enter your email').fill('admin@northcodersevents.com');
-  await page.getByPlaceholder('Enter your password').fill('1234567');
-  await page.getByPlaceholder('Retype your password').fill('1234567');
+  await page.getByPlaceholder('Enter your email').fill('admin_event_management@admin.com');
+  await page.getByPlaceholder('Enter your password').fill('admin@EVENTS2025');
+  await page.getByPlaceholder('Retype your password').fill('admin@EVENTS2025');
   await page.getByRole('button', { name: /login/i }).click();
   await page.waitForURL('https://northcodersevents.netlify.app/');
 }
