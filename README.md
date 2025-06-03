@@ -1,5 +1,5 @@
 <h2>ADMIN ROLE</h2>
-email: admin@northcodersevents.com
+email: admin@northcodersevents.com<br/>
 password: 1234567
 <h2>SET-UP.</h2>
 created a new directory in the terminal entitled 'Event-Management' and then proceeded to cd into same directory.
