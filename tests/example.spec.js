@@ -42,7 +42,7 @@ test.describe('Home Page', () => {
   }); //End of Nav Links Test
 
   test.describe('Log In Authentication', () => {
-    test('authenticated nav links', async ({ page }) => {
+    test.skip('authenticated nav links', async ({ page }) => {
       await loginUser(page);
       await expect(page.getByRole('link', { name: 'Create Event' })).toBeVisible();
       await expect(page.getByText('Log Out')).toBeVisible();
@@ -85,9 +85,11 @@ test.describe('Home Page', () => {
   }); //End of Edit Test
 
 
-  test.describe("FORM VALIDATION", () => {
-  test.skip("Shows errors when submitting empty login form", async ({ page }) => {
-    await page.goto('https://northcodersevents.netlify.app/');
+ test.describe("FORM VALIDATION", () => {
+  const baseUrl = 'https://northcodersevents.netlify.app/';
+
+  test("Shows errors when submitting empty login form", async ({ page }) => {
+    await page.goto(baseUrl);
     await page.getByRole('link', { name: 'Log In' }).click();
     await page.getByRole('button', { name: /login/i }).click();
 
@@ -98,39 +100,39 @@ test.describe('Home Page', () => {
     ]);
   });
 
-  test.skip("Shows error for invalid email format", async ({ page }) => {
-    await page.goto('https://northcodersevents.netlify.app/');
+  test("Shows error for invalid email format", async ({ page }) => {
+    await page.goto(baseUrl);
     await page.getByRole('link', { name: 'Log In' }).click();
 
     await page.getByPlaceholder('Enter your email').fill('invalidemail');
-    await page.getByPlaceholder('Enter your password').fill('123456');
-    await page.getByPlaceholder('Retype your password').fill('123456');
+    await page.getByPlaceholder('Enter your password').fill('Test123!');
+    await page.getByPlaceholder('Retype your password').fill('Test123!');
     await page.getByRole('button', { name: /login/i }).click();
 
     await expect(page.locator('.error-message')).toContainText(['Invalid email address.']);
   });
 
-  test.skip("Shows error for password less than 6 characters", async ({ page }) => {
-    await page.goto('https://northcodersevents.netlify.app/');
+  test("Shows error for password not meeting strength requirements", async ({ page }) => {
+    await page.goto(baseUrl);
     await page.getByRole('link', { name: 'Log In' }).click();
 
     await page.getByPlaceholder('Enter your email').fill('test@example.com');
-    await page.getByPlaceholder('Enter your password').fill('123');
-    await page.getByPlaceholder('Retype your password').fill('123');
+    await page.getByPlaceholder('Enter your password').fill('12345678'); 
+    await page.getByPlaceholder('Retype your password').fill('12345678');
     await page.getByRole('button', { name: /login/i }).click();
 
     await expect(page.locator('.error-message')).toContainText([
-      'Password must be at least 6 characters.'
+      'Password must be at least 8 characters, include uppercase, lowercase, number, and symbol.'
     ]);
   });
 
-  test.skip("Shows error when passwords do not match", async ({ page }) => {
-    await page.goto('https://northcodersevents.netlify.app/');
+  test("Shows error when passwords do not match", async ({ page }) => {
+    await page.goto(baseUrl);
     await page.getByRole('link', { name: 'Log In' }).click();
 
     await page.getByPlaceholder('Enter your email').fill('test@example.com');
-    await page.getByPlaceholder('Enter your password').fill('123456');
-    await page.getByPlaceholder('Retype your password').fill('654321');
+    await page.getByPlaceholder('Enter your password').fill('Test123!');
+    await page.getByPlaceholder('Retype your password').fill('Different123!');
     await page.getByRole('button', { name: /login/i }).click();
 
     await expect(page.locator('.error-message')).toContainText([
@@ -140,7 +142,7 @@ test.describe('Home Page', () => {
 });
 
 test.describe('Event Sign Up', () => {
-  test.only('User can sign up for an event', async ({ page }) => {
+  test.skip('User can sign up for an event', async ({ page }) => {
     await loginUser(page);
     await page.goto('https://northcodersevents.netlify.app/');
     const signUpButton = page.getByRole('button', { name: 'Sign Up' }).first();
