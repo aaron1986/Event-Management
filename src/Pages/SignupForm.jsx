@@ -17,14 +17,24 @@ export default function SignupForm() {
     const validationErrors = {};
     const { email, password, confirmPassword } = formData;
 
-    if (!email.trim()) validationErrors.email = 'Email is required.';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) validationErrors.email = 'Invalid email format.';
+    if (!email.trim()) {
+      validationErrors.email = 'Email is required.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      validationErrors.email = 'Invalid email format.';
+    }
 
-    if (!password) validationErrors.password = 'Password is required.';
-    else if (password.length < 6) validationErrors.password = 'Minimum 6 characters.';
+    if (!password) {
+      validationErrors.password = 'Password is required.';
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password)) {
+      validationErrors.password =
+        'Password must be at least 8 characters, include uppercase, lowercase, number, and symbol.';
+    }
 
-    if (!confirmPassword) validationErrors.confirmPassword = 'Please confirm your password.';
-    else if (password !== confirmPassword) validationErrors.confirmPassword = 'Passwords do not match.';
+    if (!confirmPassword) {
+      validationErrors.confirmPassword = 'Please confirm your password.';
+    } else if (password !== confirmPassword) {
+      validationErrors.confirmPassword = 'Passwords do not match.';
+    }
 
     return validationErrors;
   };
@@ -42,13 +52,14 @@ export default function SignupForm() {
 
     try {
       await registerUser(formData.email, formData.password);
-      navigate('/'); 
+      navigate('/');
     } catch (error) {
-      setGeneralError(error.message);
+      setGeneralError(error.message || 'Signup failed. Please try again.');
     }
   };
 
-  const getInputClass = (field) => (errors[field] ? 'error-input' : formData[field] ? 'success-input' : '');
+  const getInputClass = (field) =>
+    errors[field] ? 'error-input' : formData[field] ? 'success-input' : '';
 
   return (
     <div>

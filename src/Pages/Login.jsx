@@ -21,17 +21,11 @@ export default function Login() {
   const validate = () => {
     const validationErrors = {};
 
-    if (!formData.email.trim()) {
-      validationErrors.email = 'Email is required.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      validationErrors.email = 'Invalid email address.';
-    }
-
-    if (!formData.password) {
-      validationErrors.password = 'Password is required.';
-    } else if (formData.password.length < 6) {
-      validationErrors.password = 'Password must be at least 6 characters.';
-    }
+if (!formData.password) {
+  validationErrors.password = 'Password is required.';
+} else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(formData.password)) {
+  validationErrors.password = 'Password must be at least 8 characters, with uppercase, lowercase, number, and symbol.';
+}
 
     if (!formData.confirmPassword) {
       validationErrors.confirmPassword = 'Please confirm your password.';
@@ -63,8 +57,16 @@ export default function Login() {
       await signInWithEmailAndPassword(auth, formData.email, formData.password);
       navigate('/');
     } catch (err) {
-      setGeneralError('Invalid email or password.');
-    }
+  if (err.code === 'auth/user-not-found') {
+    setGeneralError('No user found with this email.');
+  } else if (err.code === 'auth/wrong-password') {
+    setGeneralError('Incorrect password.');
+  } else if (err.code === 'auth/too-many-requests') {
+    setGeneralError('Too many login attempts. Please try again later.');
+  } else {
+    setGeneralError('Login failed. Please try again.');
+  }
+}
   };
 
   return (

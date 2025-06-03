@@ -1,6 +1,6 @@
 <h2>ADMIN ROLE</h2>
-email: admin@northcodersevents.com<br/>
-password: 1234567
+email: admin_event_management@admin.com<br/>
+password: admin@EVENTS2025
 <h2>SET-UP.</h2>
 created a new directory in the terminal entitled 'Event-Management' and then proceeded to cd into same directory.
 npm create vite@latest events-platform -- --template react
