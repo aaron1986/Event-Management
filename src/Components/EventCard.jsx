@@ -89,40 +89,81 @@ export default function EventCard({
   };
 
   return (
-    <div className="event-card">
-      <img src={img} alt={heading} />
-      <h3>{heading}</h3>
-      <p>{location}</p>
-      <p><strong>Date:</strong> {formattedDate}</p>
+    <section
+      className="event-card"
+      role="region"
+      aria-labelledby={`event-title-${id}`}
+    >
+      <img
+        src={img}
+        alt={`Promotional image for ${heading}`}
+        className="event-image"
+      />
+      <div className="card-content">
+        <h3 id={`event-title-${id}`} tabIndex="0">{heading}</h3>
+        <p>
+          <strong>Location:</strong>{" "}
+          <span aria-label="Event location">{location}</span>
+        </p>
+        <p>
+          <strong>Date:</strong>{" "}
+          <span aria-label="Event date">{formattedDate}</span>
+        </p>
 
-      <a href={calendarLink} target="_blank" rel="noopener noreferrer">
-        <button className="calendar-button">Add to Google Calendar</button>
-      </a>
-
-      <p><strong>{signupCount}</strong> people signed up</p>
-
-      {isAuthenticated && (
-        <>
-          <button
-            className="calendar-button"
-            onClick={handleSignup}
-            disabled={hasSignedUp}
+        <div className="button-group" role="group" aria-label={`Actions for ${heading}`}>
+          <a
+            href={calendarLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Add ${heading} to Google Calendar`}
           >
-            {hasSignedUp ? "Already Signed Up" : "Sign Up"}
-          </button>
+            <button
+              className="calendar-button"
+              type="button"
+              aria-pressed="false"
+            >
+              Add to Google Calendar
+            </button>
+          </a>
 
-          {user?.role === "staff" && (
-            <Link to={`/edit-event/${id}`}>
-              <button className="edit-button">Edit</button>
-            </Link>
+          <p aria-label="Number of signups">
+            <strong>{signupCount}</strong> people signed up
+          </p>
+
+          {isAuthenticated && (
+            <>
+              <button
+                className="signup-button"
+                onClick={handleSignup}
+                disabled={hasSignedUp}
+                aria-disabled={hasSignedUp}
+                aria-label={
+                  hasSignedUp
+                    ? `You are already signed up for ${heading}`
+                    : `Sign up for ${heading}`
+                }
+              >
+                {hasSignedUp ? "Already Signed Up" : "Sign Up"}
+              </button>
+
+              {user?.role === "staff" && (
+                <Link
+                  to={`/edit-event/${id}`}
+                  aria-label={`Edit ${heading} event`}
+                >
+                  <button className="edit-button" type="button">
+                    Edit
+                  </button>
+                </Link>
+              )}
+            </>
           )}
-        </>
-      )}
-    </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
-// Helpers
 function getOneHourLater(dateStr) {
   const start = new Date(dateStr);
   if (isNaN(start)) return "";
