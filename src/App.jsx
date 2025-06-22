@@ -41,7 +41,7 @@ useEffect(() => {
         <Route path='/' element={<EventList isAuthenticated={isAuthenticated} user={user} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create-event" element={user?.role === 'staff' ? <CreateEvent /> : <Navigate to="/" />}/>
-        <Route path="/edit-event/:id" element={<EditEvent />} />
+        <Route path="/edit-event/:id" element={user?.role === 'staff' ? <EditEvent /> : <Navigate to="/" />} />
         <Route path="/signup" element={<SignupForm />} />
       </Routes>
     </BrowserRouter>

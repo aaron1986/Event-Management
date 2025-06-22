@@ -7,7 +7,6 @@ export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    confirmPassword: '',
   });
   const [errors, setErrors] = useState({});
   const [generalError, setGeneralError] = useState('');
@@ -21,16 +20,14 @@ export default function Login() {
   const validate = () => {
     const validationErrors = {};
 
-if (!formData.password) {
-  validationErrors.password = 'Password is required.';
-} else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(formData.password)) {
-  validationErrors.password = 'Password must be at least 8 characters, with uppercase, lowercase, number, and symbol.';
-}
+    if (!formData.email.trim()) {
+      validationErrors.email = 'Email is required.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      validationErrors.email = 'Invalid email format.';
+    }
 
-    if (!formData.confirmPassword) {
-      validationErrors.confirmPassword = 'Please confirm your password.';
-    } else if (formData.password !== formData.confirmPassword) {
-      validationErrors.confirmPassword = 'Passwords do not match.';
+    if (!formData.password) {
+      validationErrors.password = 'Password is required.';
     }
 
     return validationErrors;
@@ -54,26 +51,28 @@ if (!formData.password) {
     }
 
     try {
-      await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      await signInWithEmailAndPassword(auth, formData.email.trim(), formData.password);
       navigate('/');
     } catch (err) {
-  if (err.code === 'auth/user-not-found') {
-    setGeneralError('No user found with this email.');
-  } else if (err.code === 'auth/wrong-password') {
-    setGeneralError('Incorrect password.');
-  } else if (err.code === 'auth/too-many-requests') {
-    setGeneralError('Too many login attempts. Please try again later.');
-  } else {
-    setGeneralError('Login failed. Please try again.');
-  }
-}
+      if (err.code === 'auth/user-not-found') {
+        setGeneralError('No user found with this email.');
+      } else if (err.code === 'auth/wrong-password') {
+        setGeneralError('Incorrect password.');
+      } else if (err.code === 'auth/too-many-requests') {
+        setGeneralError('Too many login attempts. Please try again later.');
+      } else {
+        setGeneralError('Login failed. Please try again.');
+      }
+    }
   };
 
   return (
     <div>
       <div className="title"><h1>Login to Your Account</h1></div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="email"><span>Email: <span className="required-star">*</span></span></label>
+        <label htmlFor="email">
+          <span>Email: <span className="required-star">*</span></span>
+        </label>
         <input 
           type="text"
           id="email"
@@ -85,7 +84,9 @@ if (!formData.password) {
         />
         {errors.email && <p className="error-message">{errors.email}</p>}
 
-        <label htmlFor="password"><span>Password: <span className="required-star">*</span></span></label>
+        <label htmlFor="password">
+          <span>Password: <span className="required-star">*</span></span>
+        </label>
         <input
           type="password"
           id="password"
@@ -96,18 +97,6 @@ if (!formData.password) {
           className={getInputClass('password')}
         />
         {errors.password && <p className="error-message">{errors.password}</p>}
-
-        <label htmlFor="confirmPassword"><span>Retype Password: <span className="required-star">*</span></span></label>
-        <input
-          type="password"
-          id="confirmPassword"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          placeholder="Retype your password"
-          className={getInputClass('confirmPassword')}
-        />
-        {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
 
         {generalError && <p className="error-message">{generalError}</p>}
 

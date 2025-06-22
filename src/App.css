@@ -206,7 +206,7 @@ textarea {
   margin-top: 12px;
 }
 
-.event-card {
+/* .event-card {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
@@ -225,7 +225,7 @@ textarea {
   outline: 3px solid #005fcc;
   outline-offset: 2px;
 }
-
+*/
 .event-image {
   width: 100%;
   height: auto;
@@ -303,6 +303,7 @@ textarea {
   background-color: #1e7e34;
 }
 
+/*Media Queries */
 @media screen and (max-width: 600px) {
   .event-card {
     padding: 0.5rem;
@@ -322,3 +323,53 @@ textarea {
     font-size: 1rem;
   }
 }
+
+@media screen and (min-width: 900px) {
+    .event-list-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.event-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  height: 100%; 
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.button-group {
+  margin-top: auto; 
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.event-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.event-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  height: 400px;
+}
+
+}
+
