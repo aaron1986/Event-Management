@@ -27,7 +27,8 @@ export default function EditEvent() {
           }
         }
 
-        setFormData({ ...data, date: formattedDate });
+        setFormData({...data, startDateTime: data.startDateTime?.slice(0, 16), endDateTime: data.endDateTime?.slice(0, 16),
+          });
       }
       setLoading(false);
     };
@@ -40,18 +41,30 @@ export default function EditEvent() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = async () => {
-    if (!docId) return;
-    const eventRef = doc(db, "events", docId);
+const handleSave = async () => {
+  if (!docId) return;
 
-    const updatedData = {
-      ...formData,
-      date: new Date(formData.date).toISOString(),
-    };
+  const start = new Date(formData.startDateTime);
+  const end = new Date(formData.endDateTime);
 
-    await updateDoc(eventRef, updatedData);
-    navigate("/");
+  if (isNaN(start) || isNaN(end)) {
+    alert("Please enter valid start and end dates.");
+    return;
+  }
+
+  const eventRef = doc(db, "events", docId);
+
+  const updatedData = {
+    ...formData,
+    startDateTime: start.toISOString(),
+    endDateTime: end.toISOString(),
+    date: start.toISOString(), 
   };
+
+  await updateDoc(eventRef, updatedData);
+  navigate("/");
+};
+
 
   if (loading) return <p>Loading...</p>;
   if (!formData) return <p>Event not found.</p>;
@@ -59,31 +72,46 @@ export default function EditEvent() {
   return (
     <div className="edit-event-container">
       <h2>Edit Event</h2>
+<label>
+  Heading:
+  <input name="heading" value={formData?.heading || ''} onChange={handleChange} />
+</label>
 
-      <label>
-        Heading:
-        <input name="heading" value={formData.heading} onChange={handleChange} />
-      </label>
+<label>
+  Location:
+  <input name="location" value={formData?.location || ''} onChange={handleChange} />
+</label>
 
-      <label>
-        Location:
-        <input name="location" value={formData.location} onChange={handleChange} />
-      </label>
+<label>
+  Description:
+  <textarea name="description" value={formData?.description || ''} onChange={handleChange} />
+</label>
 
-      <label>
-        Description:
-        <textarea name="description" value={formData.description} onChange={handleChange} />
-      </label>
+<label>
+  Image URL:
+  <input name="img" value={formData?.img || ''} onChange={handleChange} />
+</label>
 
-      <label>
-        Image URL:
-        <input name="img" value={formData.img} onChange={handleChange} />
-      </label>
+<label>
+  Start:
+  <input
+    type="datetime-local"
+    name="startDateTime"
+    value={formData?.startDateTime || ''}
+    onChange={handleChange}
+  />
+</label>
 
-      <label>
-        Date:
-        <input type="date" name="date" value={formData.date} onChange={handleChange} />
-      </label>
+<label>
+  End:
+  <input
+    type="datetime-local"
+    name="endDateTime"
+    value={formData?.endDateTime || ''}
+    onChange={handleChange}
+  />
+</label>
+
 
       <div className="button-group">
         <button 
