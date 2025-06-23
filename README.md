@@ -21,6 +21,9 @@ Completed test(s) for the following:<br/>
 (5) Edit Event.<br/>
 (6) Form Validation.</br>
 (7) Sign Up Button.</br>
+(8) Registed the Site with Google reCAPTCHA.</br>
+(9) npm install react-google-recaptcha. </br>
+(10) Updated the Login_Events.jsx </br>
 
 <h2>FIREBASE.</h2>
 npm install firebase<br/>
