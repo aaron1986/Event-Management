@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Utils/firebase';
 import { useNavigate } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
+
+const RECAPTCHA_SITE_KEY = '6LdpmmorAAAAAImriIrzmp5aAnpZNersVus5G3Ew'; 
 
 export default function Login_Events() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [generalError, setGeneralError] = useState('');
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -19,18 +21,22 @@ export default function Login_Events() {
 
   const validate = () => {
     const validationErrors = {};
-
     if (!formData.email.trim()) {
       validationErrors.email = 'Email is required.';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       validationErrors.email = 'Invalid email format.';
     }
-
     if (!formData.password) {
       validationErrors.password = 'Password is required.';
     }
-
+    if (!captchaVerified) {
+      validationErrors.captcha = 'Please verify you are not a robot.';
+    }
     return validationErrors;
+  };
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaVerified(!!value);
   };
 
   const getInputClass = (field) => {
@@ -82,7 +88,7 @@ export default function Login_Events() {
           placeholder="Enter your email"
           className={getInputClass('email')}
         />
-        {errors.email && <p className="error-message" role="alert" aria-live="assertive">{errors.email}</p>}
+        {errors.email && <p className="error-message">{errors.email}</p>}
 
         <label htmlFor="password">
           <span>Password: <span className="required-star">*</span></span>
@@ -96,9 +102,17 @@ export default function Login_Events() {
           placeholder="Enter your password"
           className={getInputClass('password')}
         />
-        {errors.password && <p className="error-message" role="alert" aria-live="assertive">{errors.password}</p>}
+        {errors.password && <p className="error-message">{errors.password}</p>}
 
-        {generalError && <p className="error-message" role="alert" aria-live="assertive">{generalError}</p>}
+        <div className="captcha-container" style={{ marginTop: '1rem' }}>
+          <ReCAPTCHA
+            sitekey={RECAPTCHA_SITE_KEY}
+            onChange={handleCaptchaChange}
+          />
+        </div>
+        {errors.captcha && <p className="error-message">{errors.captcha}</p>}
+
+        {generalError && <p className="error-message">{generalError}</p>}
 
         <button type="submit" className="login-btn">Login</button>
       </form>
