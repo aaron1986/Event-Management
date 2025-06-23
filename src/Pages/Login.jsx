@@ -67,7 +67,7 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <main role="main">
       <div className="title"><h1>Login to Your Account</h1></div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">
@@ -82,7 +82,7 @@ export default function Login() {
           placeholder="Enter your email"
           className={getInputClass('email')}
         />
-        {errors.email && <p className="error-message">{errors.email}</p>}
+        {errors.email && <p className="error-message" role="alert" aria-live="assertive">{errors.email}</p>}
 
         <label htmlFor="password">
           <span>Password: <span className="required-star">*</span></span>
@@ -96,12 +96,12 @@ export default function Login() {
           placeholder="Enter your password"
           className={getInputClass('password')}
         />
-        {errors.password && <p className="error-message">{errors.password}</p>}
+        {errors.password && <p className="error-message" role="alert" aria-live="assertive">{errors.password}</p>}
 
-        {generalError && <p className="error-message">{generalError}</p>}
+        {generalError && <p className="error-message" role="alert" aria-live="assertive">{generalError}</p>}
 
         <button type="submit" className="login-btn">Login</button>
       </form>
-    </div>
+    </main>
   );
 }

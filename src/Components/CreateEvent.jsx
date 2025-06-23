@@ -45,7 +45,7 @@ await addDoc(collection(db, "events"), {
   };
 
   return (
-    <div>
+    <main role="main">
       <h2>Create Event</h2>
       <form onSubmit={handleSubmit}>
         <input name="heading" placeholder="Heading" onChange={handleChange} required />
@@ -57,6 +57,6 @@ await addDoc(collection(db, "events"), {
 
         <button type="submit">Create Event</button>
       </form>
-    </div>
+    </main>
   );
 }
