@@ -96,7 +96,7 @@ export default function EventCard({
         className="event-image"
       />
       <div className="card-content">
-        <h3 id={`event-title-${id}`} tabIndex="0">{heading}</h3>
+        <h2 id={`event-title-${id}`} tabIndex="0">{heading}</h2>
 
         <div>
           <strong>Description:</strong>

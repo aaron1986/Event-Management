@@ -12,7 +12,7 @@ import Login_Events from "./Pages/Login_Events";
 import EditEvent from "./Components/EditEvent";
 import CreateEvent from "./Components/CreateEvent";
 import SignupForm from './Pages/SignupForm';
-import NotFound from './Pages/NotFound'; // ✅ New import
+import NotFound from './Pages/NotFound';
 
 function ScrollAndFocusManager({ children }) {
   const location = useLocation();
@@ -27,9 +27,9 @@ function ScrollAndFocusManager({ children }) {
   return (
     <>
       <a href="#main-content" className="skip-link">Skip to main content</a>
-      <div id="main-content" tabIndex="-1" ref={mainRef}>
+      <main id="main-content" tabIndex="-1" ref={mainRef} role="main">
         {children}
-      </div>
+      </main>
     </>
   );
 }
