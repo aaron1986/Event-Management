@@ -306,17 +306,15 @@ a:focus-visible {
   width: 1px;
   height: 1px;
   overflow: hidden;
-  z-index: 100;
 }
-
 .skip-link:focus {
   position: static;
   width: auto;
   height: auto;
-  left: auto;
+  padding: 1rem;
   background: #000;
   color: #fff;
-  padding: 8px;
+  z-index: 1000;
 }
 
 
