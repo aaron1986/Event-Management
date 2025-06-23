@@ -8,7 +8,7 @@ import './App.css';
 
 import EventList from "./Pages/EventList";
 import Nav from "./Components/Nav";
-import Login from "./Pages/Login";
+import Login_Events from "./Pages/Login_Events";
 import EditEvent from "./Components/EditEvent";
 import CreateEvent from "./Components/CreateEvent";
 import SignupForm from './Pages/SignupForm';
@@ -59,7 +59,7 @@ function App() {
       <ScrollAndFocusManager>
         <Routes>
           <Route path='/' element={<EventList isAuthenticated={isAuthenticated} user={user} />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login_Events" element={<Login_Events />} />
           <Route path="/create-event" element={user?.role === 'staff' ? <CreateEvent /> : <Navigate to="/" />} />
           <Route path="/edit-event/:id" element={user?.role === 'staff' ? <EditEvent /> : <Navigate to="/" />} />
           <Route path="/signup" element={<SignupForm />} />

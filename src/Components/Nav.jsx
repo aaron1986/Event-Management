@@ -27,7 +27,7 @@ export default function Nav({ user }) {
           </>
         ) : (
           <>
-            <li><Link to="/login">Log In</Link></li>
+            <li><Link to="/login_Events">Log In</Link></li>
             <li><Link to="/signup">Sign Up</Link></li>
           </>
         )}
