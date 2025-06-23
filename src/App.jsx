@@ -12,6 +12,7 @@ import Login_Events from "./Pages/Login_Events";
 import EditEvent from "./Components/EditEvent";
 import CreateEvent from "./Components/CreateEvent";
 import SignupForm from './Pages/SignupForm';
+import NotFound from './Pages/NotFound'; // ✅ New import
 
 function ScrollAndFocusManager({ children }) {
   const location = useLocation();
@@ -63,6 +64,7 @@ function App() {
           <Route path="/create-event" element={user?.role === 'staff' ? <CreateEvent /> : <Navigate to="/" />} />
           <Route path="/edit-event/:id" element={user?.role === 'staff' ? <EditEvent /> : <Navigate to="/" />} />
           <Route path="/signup" element={<SignupForm />} />
+          <Route path="*" element={<NotFound />} /> {/* ✅ 404 fallback route */}
         </Routes>
       </ScrollAndFocusManager>
     </BrowserRouter>
