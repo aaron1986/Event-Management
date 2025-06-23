@@ -1,6 +1,13 @@
-export function generateGoogleCalendarLink({ title, description, location, startDateTime, endDateTime }) {
+export function generateGoogleCalendarLink({
+  title,
+  description = "",
+  location = "",
+  startDateTime,
+  endDateTime,
+}) {
   const baseUrl = "https://www.google.com/calendar/render?action=TEMPLATE";
-  const text = `&text=${encodeURIComponent(title)}`;
+
+  const text = `&text=${encodeURIComponent(title || "Event")}`;
   const dates = `&dates=${formatDate(startDateTime)}/${formatDate(endDateTime)}`;
   const details = `&details=${encodeURIComponent(description)}`;
   const loc = `&location=${encodeURIComponent(location)}`;
@@ -9,8 +16,13 @@ export function generateGoogleCalendarLink({ title, description, location, start
 }
 
 function formatDate(dateString) {
+  if (!dateString) {
+    console.error("Missing date string:", dateString);
+    return "";
+  }
+
   const date = new Date(dateString);
-  if (!dateString || isNaN(date.getTime())) {
+  if (isNaN(date.getTime())) {
     console.error("Invalid date passed to formatDate:", dateString);
     return "";
   }
