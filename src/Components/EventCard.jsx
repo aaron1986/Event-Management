@@ -29,43 +29,32 @@ export default function EventCard({
   const start = new Date(startDateTime || fallbackStart);
   const end = new Date(endDateTime || getOneHourLater(start));
 
-  if (!start || isNaN(start)) {
-    return null;
-  }
-
-  const calendarLink = generateGoogleCalendarLink({
-    title: heading,
-    description,
-    location,
-    startDateTime: start.toISOString(),
-    endDateTime: end.toISOString(),
-  });
-
   useEffect(() => {
     const fetchSignupInfo = async () => {
       try {
-        const q = query(collection(db, "signups"), where("eventId", "==", id));
-        const snap = await getDocs(q);
+        const signupRef = collection(db, "signups");
+        const signupQuery = query(signupRef, where("eventId", "==", id));
+        const snap = await getDocs(signupQuery);
         setSignupCount(snap.size);
 
         if (user) {
-          const userQ = query(
-            collection(db, "signups"),
+          const userSignupQuery = query(
+            signupRef,
             where("eventId", "==", id),
             where("userId", "==", user.uid)
           );
-          const userSnap = await getDocs(userQ);
+          const userSnap = await getDocs(userSignupQuery);
           setHasSignedUp(!userSnap.empty);
         }
-      } catch (err) {
-        console.error("Error fetching signup info:", err);
+      } catch (error) {
+        console.error("Error fetching signup info:", error);
       }
     };
 
     fetchSignupInfo();
   }, [id, user]);
 
-   const handleSignup = async () => {
+  const handleSignup = async () => {
     if (!user) {
       alert("Please log in to sign up for this event.");
       return;
@@ -84,17 +73,23 @@ export default function EventCard({
       });
       setHasSignedUp(true);
       setSignupCount((prev) => prev + 1);
-    } catch (err) {
-      console.error("Error signing up:", err);
+    } catch (error) {
+      console.error("Error signing up:", error);
     }
   };
 
+  if (!start || isNaN(start)) return null;
+
+  const calendarLink = generateGoogleCalendarLink({
+    title: heading,
+    description,
+    location,
+    startDateTime: start.toISOString(),
+    endDateTime: end.toISOString(),
+  });
+
   return (
-    <section
-      className="event-card"
-      role="region"
-      aria-labelledby={`event-title-${id}`}
-    >
+    <section className="event-card" role="region" aria-labelledby={`event-title-${id}`}>
       <img
         src={img}
         alt={`Promotional image for ${heading}`}
@@ -102,15 +97,17 @@ export default function EventCard({
       />
       <div className="card-content">
         <h3 id={`event-title-${id}`} tabIndex="0">{heading}</h3>
-<div>
-  <strong>Description:</strong>
-  <div aria-label="Event description">{description}</div>
-</div>
+
+        <div>
+          <strong>Description:</strong>
+          <div aria-label="Event description">{description}</div>
+        </div>
 
         <p>
           <strong>Location:</strong>{" "}
           <span aria-label="Event location">{location}</span>
         </p>
+
         <p>
           <strong>Date:</strong>{" "}
           <span aria-label="Event date">
@@ -123,11 +120,10 @@ export default function EventCard({
             href={calendarLink}
             target="_blank"
             rel="noopener noreferrer"
+            className="calendar-link"
             aria-label={`Add ${heading} to Google Calendar`}
           >
-            <button className="calendar-button" type="button">
-              Add to Google Calendar
-            </button>
+            Add to Google Calendar
           </a>
 
           <p aria-label="Number of signups">
@@ -165,8 +161,8 @@ export default function EventCard({
   );
 }
 
-function getOneHourLater(dateStr) {
-  const start = new Date(dateStr);
-  if (isNaN(start)) return new Date();
-  return new Date(start.getTime() + 60 * 60 * 1000);
+function getOneHourLater(date) {
+  const parsedDate = new Date(date);
+  if (isNaN(parsedDate)) return new Date();
+  return new Date(parsedDate.getTime() + 60 * 60 * 1000);
 }

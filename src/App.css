@@ -16,6 +16,9 @@ body {
 background-image: url('./assets/svg_northcoders.svg');
 background-repeat: no-repeat;
 width: 100%;
+font-family: system-ui, sans-serif; /* Use readable font */
+color: #111; /* dark text */
+background-color: #fff; /* light background */
 }
 
 nav {
@@ -145,8 +148,8 @@ textarea {
 }
 
 .error-message {
-  color: red;
-  font-size: 0.9rem;
+  color: #b00020; 
+  font-weight: 600;
 }
 
 .success-message {
@@ -206,26 +209,6 @@ textarea {
   margin-top: 12px;
 }
 
-/* .event-card {
-  display: flex;
-  flex-direction: column;
-  background-color: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  margin: 1rem auto;
-  max-width: 400px;
-  padding: 1rem;
-  transition: transform 0.2s ease;
-}
-
-.event-card:focus-within,
-.event-card:hover {
-  transform: scale(1.01);
-  outline: 3px solid #005fcc;
-  outline-offset: 2px;
-}
-*/
 .event-image {
   width: 100%;
   height: auto;
@@ -251,6 +234,12 @@ textarea {
   font-size: 1rem;
   margin: 0.25rem 0;
   color: #333;
+}
+
+.event-card h3,
+.event-card p,
+.event-card strong {
+  color: #222;
 }
 
 /* Buttons */
@@ -302,6 +291,34 @@ textarea {
 .edit-button:focus {
   background-color: #1e7e34;
 }
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 2px solid #005fcc;
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  left: auto;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+}
+
 
 /*Media Queries */
 @media screen and (max-width: 600px) {
