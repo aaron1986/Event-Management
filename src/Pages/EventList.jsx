@@ -73,19 +73,23 @@ export default function EventList({ isAuthenticated, user}) {
     setFilteredEvents(filtered);
   };
 
- if (loading) return <p role="status" aria-live="polite">Loading events.</p>;
-
+  if (loading) return <p role="status" aria-live="polite">Loading events.</p>;
+  
   return (
     <div className="event-list-wrapper">
       <h1>Event Lists</h1>
 
-      <input
-        type="text"
-        placeholder="Search events by date, title, location or description..."
-        value={searchTerm}
-        onChange={handleSearch}
-        className="search-input"
-      />
+    <label htmlFor="event-search" className="sr-only">
+  Search events
+</label>
+<input
+  id="event-search"
+  type="text"
+  placeholder="Search events by date, title, location or description..."
+  value={searchTerm}
+  onChange={handleSearch}
+  className="search-input"
+/>
 
       <div className="event-list">
         {filteredEvents.length > 0 ? (
