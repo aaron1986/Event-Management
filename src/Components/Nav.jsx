@@ -12,26 +12,26 @@ export default function Nav({ user }) {
   };
 
   return (
-    <nav>
-      <ul>
-        <li><Link to="/">Home</Link></li>
+   <nav role="navigation" aria-label="Main navigation">
+  <ul>
+    <li><Link to="/">Home</Link></li>
 
-        {user ? (
-          <>
-            {user.role === 'staff' && (
-              <li><Link to="/create-event">Create Event</Link></li>
-            )}
-            <li>
-              <a href="/logout" onClick={handleLogout}>Log Out</a>
-            </li>
-          </>
-        ) : (
-          <>
-            <li><Link to="/login_Events">Log In</Link></li>
-            <li><Link to="/signup">Sign Up</Link></li>
-          </>
+    {user ? (
+      <>
+        {user.role === 'staff' && (
+          <li><Link to="/create-event">Create Event</Link></li>
         )}
-      </ul>
-    </nav>
+        <li>
+          <button onClick={handleLogout} className="logout-button" aria-label="Log out">Log Out</button>
+        </li>
+      </>
+    ) : (
+      <>
+        <li><Link to="/login_Events">Log In</Link></li>
+        <li><Link to="/signup">Sign Up</Link></li>
+      </>
+    )}
+  </ul>
+</nav>
   );
 }

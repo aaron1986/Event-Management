@@ -26,7 +26,9 @@ function ScrollAndFocusManager({ children }) {
 
   return (
     <>
-      <a href="#main-content" className="skip-link">Skip to main content</a>
+      <header>
+        <a href="#main-content" className="skip-link">Skip to main content</a>
+      </header>
       <main id="main-content" tabIndex="-1" ref={mainRef} role="main">
         {children}
       </main>

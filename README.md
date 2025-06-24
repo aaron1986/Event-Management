@@ -25,6 +25,7 @@ Completed test(s) for the following:<br/>
 (9) npm install react-google-recaptcha. </br>
 (10) Updated the Login_Events.jsx </br>
 (11) I added google-site-verification from the Google Search Console </br>
+(12) Updated the headings tags, recognized landmark to pass accessibility testing </br>
 
 <h2>FIREBASE.</h2>
 npm install firebase<br/>
