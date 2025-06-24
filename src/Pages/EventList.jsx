@@ -74,7 +74,7 @@ export default function EventList({ isAuthenticated, user}) {
   };
 
   if (loading) return <p role="status" aria-live="polite">Loading events.</p>;
-
+  
   return (
     <div className="event-list-wrapper">
       <h1>Event Lists</h1>
