@@ -22,7 +22,7 @@ export default function Nav({ user }) {
           <li><Link to="/create-event">Create Event</Link></li>
         )}
         <li>
-          <button onClick={handleLogout} className="logout-button" aria-label="Log out">Log Out</button>
+          <a href="/logout" onClick={handleLogout}>Log Out</a>
         </li>
       </>
     ) : (
