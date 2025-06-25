@@ -23,9 +23,12 @@ Completed test(s) for the following:<br/>
 (7) Sign Up Button.</br>
 (8) Registed the Site with Google reCAPTCHA.</br>
 (9) npm install react-google-recaptcha. </br>
-(10) Updated the Login_Events.jsx </br>
-(11) I added google-site-verification from the Google Search Console </br>
-(12) Updated the headings tags, recognized landmark to pass accessibility testing </br>
+(10) Updated the Login_Events.jsx. </br>
+(11) I added google-site-verification from the Google Search Console. </br>
+(12) Updated the headings tags, recognized landmark to pass accessibility testing. </br>
+(13) The platform should clearly communicate errors to the users. 👉 no fallback route for not found errors. </br>
+(14) Created a NotFound.jsx fallback route. </br>
+(15) 
 
 <h2>FIREBASE.</h2>
 npm install firebase<br/>

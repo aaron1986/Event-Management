@@ -3,7 +3,7 @@ import EventCard from "../Components/EventCard";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db, auth } from "../Utils/firebase";
 
-export default function EventList({ isAuthenticated, user}) {
+export default function EventList({ isAuthenticated, user }) {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,9 +13,9 @@ export default function EventList({ isAuthenticated, user}) {
   useEffect(() => {
     const fetchEvents = async () => {
       const querySnapshot = await getDocs(collection(db, "events"));
-      const eventsData = querySnapshot.docs.map(doc => ({
+      const eventsData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }));
       setEvents(eventsData);
       setFilteredEvents(eventsData);
@@ -44,7 +44,7 @@ export default function EventList({ isAuthenticated, user}) {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
 
-    const filtered = events.filter(event => {
+    const filtered = events.filter((event) => {
       const heading = event.heading?.toLowerCase() || "";
       const location = event.location?.toLowerCase() || "";
       const description = event.description?.toLowerCase() || "";
@@ -59,7 +59,7 @@ export default function EventList({ isAuthenticated, user}) {
             month: "long",
             day: "numeric",
             hour: "2-digit",
-            minute: "2-digit"
+            minute: "2-digit",
           }).toLowerCase();
 
       return (
@@ -73,33 +73,38 @@ export default function EventList({ isAuthenticated, user}) {
     setFilteredEvents(filtered);
   };
 
-  if (loading) return <p role="status" aria-live="polite">Loading events.</p>;
+  if (loading)
+    return (
+      <p role="status" aria-live="polite">
+        Loading events...
+      </p>
+    );
 
   return (
     <div className="event-list-wrapper">
       <h1>Event Lists</h1>
 
-    <label htmlFor="event-search" className="sr-only">
-  Search events
-</label>
-<input
-  id="event-search"
-  type="text"
-  placeholder="Search events by date, title, location or description..."
-  value={searchTerm}
-  onChange={handleSearch}
-  className="search-input"
-/>
+      <div className="search-bar">
+        <label htmlFor="event-search">🔍 Search Events</label>
+        <input
+          id="event-search"
+          type="text"
+          placeholder="Search by date, title, location, or description"
+          value={searchTerm}
+          onChange={handleSearch}
+          className="search-input"
+        />
+      </div>
 
-      <div className="event-list">
+      <div className="event-list grid">
         {filteredEvents.length > 0 ? (
           filteredEvents.map((event) => (
-        <EventCard
-        key={event.id}
-        {...event}
-        isAuthenticated={isAuthenticated}
-        user={user}
-        />
+            <EventCard
+              key={event.id}
+              {...event}
+              isAuthenticated={isAuthenticated}
+              user={user}
+            />
           ))
         ) : (
           <p>No events found matching your search.</p>
