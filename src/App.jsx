@@ -66,7 +66,7 @@ function App() {
           <Route path="/create-event" element={user?.role === 'staff' ? <CreateEvent /> : <Navigate to="/" />} />
           <Route path="/edit-event/:id" element={user?.role === 'staff' ? <EditEvent /> : <Navigate to="/" />} />
           <Route path="/signup" element={<SignupForm />} />
-          <Route path="*" element={<NotFound />} /> {/* ✅ 404 fallback route */}
+          <Route path="*" element={<NotFound />} /> 
         </Routes>
       </ScrollAndFocusManager>
     </BrowserRouter>
