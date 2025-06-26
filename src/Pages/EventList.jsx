@@ -77,7 +77,8 @@ export default function EventList({ isAuthenticated, user }) {
   
   return (
     <div className="event-list-wrapper">
-      <h1>Event Lists</h1>
+      <h1>Event Planner</h1>
+      <h2>Empower users to save events to Google Calendar.</h2>
 
       <div className="search-bar">
         <label htmlFor="event-search">🔍 Search Events</label>
