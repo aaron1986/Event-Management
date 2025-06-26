@@ -29,30 +29,35 @@ export default function EventCard({
   const start = new Date(startDateTime || fallbackStart);
   const end = new Date(endDateTime || getOneHourLater(start));
 
-  useEffect(() => {
-    const fetchSignupInfo = async () => {
-      try {
-        const signupRef = collection(db, "signups");
-        const signupQuery = query(signupRef, where("eventId", "==", id));
-        const snap = await getDocs(signupQuery);
-        setSignupCount(snap.size);
+useEffect(() => {
+  const fetchSignupInfo = async () => {
+    try {
+      const signupRef = collection(db, "signups");
 
-        if (user) {
-          const userSignupQuery = query(
-            signupRef,
-            where("eventId", "==", id),
-            where("userId", "==", user.uid)
-          );
-          const userSnap = await getDocs(userSignupQuery);
-          setHasSignedUp(!userSnap.empty);
-        }
-      } catch (error) {
-        console.error("Error fetching signup info:", error);
+      const signupQuery = query(signupRef, where("eventId", "==", id));
+      const snap = await getDocs(signupQuery);
+      setSignupCount(snap.size);
+
+      if (user) {
+        const userSignupQuery = query(
+          signupRef,
+          where("eventId", "==", id),
+          where("userId", "==", user.uid)
+        );
+        const userSnap = await getDocs(userSignupQuery);
+        setHasSignedUp(!userSnap.empty);
+      } else {
+        setHasSignedUp(false); 
       }
-    };
+    } catch (error) {
+      console.error("Error fetching signup info:", error);
+    }
+  };
 
-    fetchSignupInfo();
-  }, [id, user]);
+  fetchSignupInfo();
+}, [id, user?.uid]); 
+
+
 
   const handleSignup = async () => {
     if (!user) {
