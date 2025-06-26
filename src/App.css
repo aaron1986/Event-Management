@@ -286,8 +286,9 @@ textarea {
 
 .signup-button:disabled,
 .signup-button[aria-disabled="true"] {
-  background-color: #999;
-  cursor: not-allowed;
+ background-color: #f3f4f6;
+    cursor: not-allowed;
+    color: black;
 }
 
 .button-group button:focus,
